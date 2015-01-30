@@ -3,12 +3,16 @@ body {
   background-color: #DDD
 }
 
-input[type='text'] {
-  height: 50pt;
+#search {
+  height: 10%;
   font-size: 40pt;
-  border-radius: 20px;
+  border-radius: 10px;
   outline-width: 0;
   width: 70%;
+}
+
+#displayImg {
+  width: 50%;
 }
 
 #output {
