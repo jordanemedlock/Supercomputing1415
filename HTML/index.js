@@ -5,7 +5,7 @@ $(document).ready(function() {
   	var search=$("#search").val()
   	search = $.trim(search)
   	if(search == "doge") {
-  		window.open(["http://weknowmemes.com/2013/11/best-of-the-doge-meme-15-pics/"])
+  		$("#output").prepend('<img src="doge.png" />').hide(100).show(1000)
   	}
   	else if(search == "back in the day" || search == "lel" || search == "LOL") {
   		var random = parseInt(Math.random()*10)
