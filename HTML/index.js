@@ -1,6 +1,9 @@
 $(document).ready(function() {
-  $("#search").change(function() {
+    $("#displayImg").hide().show(1000)
+    $("#search").delay(1000).hide().slideDown(1000)
+    $("#search").change(function() {
   	var search=$("#search").val()
+  	search = $.trim(search)
   	if(search == "doge") {
   		window.open(["http://weknowmemes.com/2013/11/best-of-the-doge-meme-15-pics/"])
   	}
@@ -19,6 +22,9 @@ $(document).ready(function() {
   		"http://jordanemedlock.com"
   		]
   		window.open([twitter[random]])
+  	}
+  	else {
+  		// use ajax to send to python
   	}
   })
 })
