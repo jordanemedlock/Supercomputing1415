@@ -8,7 +8,7 @@ $(document).ready(function() {
   		$("#output").prepend('<img src="doge.png" />').hide(100).show(1000)
   	}
   	else if(search == "back in the day" || search == "lel" || search == "LOL") {
-  		var random = parseInt(Math.random()*10)
+  		var random = floor(Math.random()*10)
   		var twitter = [
   		"https://twitter.com/jordanemedlock/status/126382915285291009",
   		"https://twitter.com/jordanemedlock/status/230350738839187458",
@@ -24,7 +24,10 @@ $(document).ready(function() {
   		window.open([twitter[random]])
   	}
   	else {
-  		// use ajax to send to python
+  		$.getJSON("/search/" + encodeURIComponent(search), function(data) {
+        console.log("Here");
+        console.log(data);
+      });
   	}
   })
 })
