@@ -12,7 +12,7 @@ class MainHandler(tornado.web.RequestHandler):
         s = f.read()
         self.write(s)
 
-class FileHandler(tornado.web.RequestHandler):
+class HTMLFileHandler(tornado.web.RequestHandler):
     def get(self,fileName):
         url = urllib.pathname2url(fileName)
         t = MimeTypes().guess_type(url)
@@ -27,7 +27,7 @@ class MathFiles(tornado.web.RequestHandler):
         t = MimeTypes().guess_type(url)
         print t
         self.set_header("Content-Type", '' + t[0] + '; charset="utf-8"')
-        f = open("../IPython/Math6/" + fileName)
+        f = open("../IPython/greyMath6/" + fileName)
         s = f.read()
         self.write(s)
 
@@ -42,7 +42,7 @@ class QueryHandler(tornado.web.RequestHandler):
 
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/(index\.css|index\.js|Digital%20Aristotle\.png|DA\.png|doge\.png|favicon.ico)", FileHandler),
+    (r"/(index\.css|index\.js|Digital%20Aristotle\.png|DA\.png|doge\.png|favicon.ico)", HTMLFileHandler),
     (r"/(Math6-[0-9]+\.png)", MathFiles),
     (r"/search/(.*)", QueryHandler)
 ])

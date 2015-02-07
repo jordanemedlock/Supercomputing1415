@@ -1,15 +1,6 @@
+#Digital Aristotle
 
-# coding: utf-8
-
-## Digital Aristotle
-
-####### Modules
-
-# In[48]:
-
-
-
-# In[49]:
+####### Modules 
 
 import json
 from matplotlib.pylab import *
@@ -24,6 +15,8 @@ from itertools import chain
 import nltk
 import os.path
 
+####### Modules 
+
 DEBUG = True
 def debug(*s):
     global DEBUG
@@ -31,9 +24,7 @@ def debug(*s):
         print s
 
 
-# ###### Data Components
-
-# In[50]:
+###### Data Components 
 
 class Serializable(object):
     @classmethod
@@ -78,8 +69,6 @@ class Chapter(Serializable):
     def toJSONObj(self):
         return {'name' : self.name, 'subchapters' : [x.toJSONObj() for x in self.subchapters], 'subjects': self.subjects, 'pages':list(self.pages)}
     
-    
-    
     @classmethod
     def fromJsonObj(cls,dictionary):
         return cls(dictionary['name'],[SubChapter.fromJsonObj(obj) for obj in dictionary['subchapters']],dictionary['subjects'],dictionary['pages'])
@@ -101,7 +90,6 @@ class SubChapter(Serializable):
 
     def toJSONObj(self):
         return {'name' : self.name, 'text' : self.text, 'subjects': self.subjects, 'pages': list(self.pages)}
-    
    
 class Subject(object):
     def __init__(self,text):
@@ -111,10 +99,10 @@ class Subject(object):
     def fromJsonObj(cls,dictionary):
         return cls(dictionary['text'])
 
+###### Data Components 
 
-####### Data Creation
+####### Data Creation  
 
-# In[51]:
 def createNewMathOut():
     f = open("LinedMath.json")
     book = Book('A First Book in Algebra',[],"","")
@@ -157,9 +145,10 @@ def readBook():
     return book
     for chapter in book.chapters:
         debug(type(chapter.subchapters))
-####### Search Data (Functions)
 
-# In[52]:
+####### Data Creation  
+
+####### Search Data (Functions)
 
 def levenshtein(source, target):
     if len(source) < len(target):
@@ -187,9 +176,6 @@ def levenshtein(source, target):
     return previous_row[-1]
 levenshtein = np.vectorize(levenshtein)
 
-
-# In[53]:
-
 def minimumChapter(xs):
     smallest = float("inf")
     smallestChapter = None
@@ -198,9 +184,6 @@ def minimumChapter(xs):
             smallest = value
             smallestChapter = chapter
     return smallestChapter
-
-
-# In[54]:
 
 numberOfTimesRan = 0
 filtered_words_global = []
@@ -236,11 +219,7 @@ def bestChapter(input_string, chapters):
             
         return (float(index), chapter)
     xs = map(chapterPlusIndex, chapters)
-#     debug(map(lambda x: (x[0], x[1].name), xs))
     return minimumChapter(xs)
-
-
-# In[55]:
 
 def memoize(f):
     memory = dict()
@@ -252,30 +231,20 @@ def memoize(f):
             return memory[x]
     return memoizedFunction
 
-
-# In[56]:
-
 def getChapter(input_string,book):
     return bestChapter(input_string, list(chain(*[c.subchapters for c in book.chapters])) + book.chapters)
-
-
-# In[57]:
 
 def levenshteinDistance(str1,str2):
     str1, str2 = unicode(str1), unicode(str2)
     return levenshtein(str1.lower().rstrip('.'),str2.lower().rstrip('.'))
 
-
-# In[58]:
-
 def isInt(string):
     string = [x for x in string if x in '0123456789']
     return len(string) > 0
 
+####### Search Data (Functions)
 
 ####### Search Data
-
-# In[59]:
 
 stopwords = """
 a about above after again agains all am an and any are aren't as at be because been before being below between both but by can't cannot 
@@ -290,8 +259,6 @@ exercise man must
 """
 stopWords = stopwords.split()
 
-
-# In[68]:
 def search(input_string,book):
     filtered_words_global = []
     chapter = getChapter(input_string,book)
@@ -299,19 +266,12 @@ def search(input_string,book):
     debug("Page:",chapter.pages,"\n")
     return displayPages(chapter.pages)
 
-# print  'Math6-%03d.png'%chapter.pages
 def displayPages(pages):
     pages = sorted(list(pages))
     return [os.path.join('Math6-%03d.png'%(x)) for x in pages]
 
-    
-    
-# display(Image(filename=os.path.join('Math6', 'Math6-%03d.png'%chapter.page)))
-# display(Image(filename=os.path.join('Math6', 'Math6-%03d.png'%(chapter.page+1))))
-# display(Image(filename=os.path.join('Math6', 'Math6-%03d.png'%(chapter.page+2))))
+####### Search Data
 
-
-# In[ ]:
 if __name__ == '__main__':
     createNewMathOut()
     book = readBook()

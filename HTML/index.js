@@ -17,8 +17,8 @@ $(document).ready(function() {
   		"https://twitter.com/jordanemedlock/status/112760542271242240",
   		"https://twitter.com/jordanemedlock/status/115611206563270656",
   		"https://twitter.com/jordanemedlock/status/110931996750004226",
-		"https://twitter.com/jordanemedlock/status/114081908358512640",
-		"https://twitter.com/jordanemedlock/status/92490374521683968",
+		  "https://twitter.com/jordanemedlock/status/114081908358512640",
+		  "https://twitter.com/jordanemedlock/status/92490374521683968",
   		"http://jordanemedlock.com"
   		]
   		window.open([twitter[random]])
