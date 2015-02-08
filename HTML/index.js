@@ -1,14 +1,14 @@
 $(document).ready(function() {
-    $("#displayImg").hide().show(1000)
-    $("#search").delay(1000).hide().slideDown(1000)
+    $("#displayImg").hide().show(1000);
+    $("#search").delay(1000).hide().slideDown(1000);
     $("#search").change(function() {
-  	var search=$("#search").val()
-  	search = $.trim(search)
+  	var search=$("#search").val();
+  	search = $.trim(search);
   	if(search == "doge") {
-  		$("#output").prepend('<img src="doge.png" />').hide(100).show(1000)
+  		$("#output").prepend('<img src="doge.png" />').hide(100).show(1000);
   	}
   	else if(search == "back in the day" || search == "lel" || search == "LOL") {
-  		var random = floor(Math.random()*10)
+  		var random = floor(Math.random()*10);
   		var twitter = [
   		"https://twitter.com/jordanemedlock/status/126382915285291009",
   		"https://twitter.com/jordanemedlock/status/230350738839187458",
@@ -20,14 +20,17 @@ $(document).ready(function() {
 		  "https://twitter.com/jordanemedlock/status/114081908358512640",
 		  "https://twitter.com/jordanemedlock/status/92490374521683968",
   		"http://jordanemedlock.com"
-  		]
-  		window.open([twitter[random]])
+  		];
+  		window.open([twitter[random]]);
   	}
   	else {
   		$.getJSON("/search/" + encodeURIComponent(search), function(data) {
-        console.log("Here");
         console.log(data);
-      });
+        for (var i = data.length - 1; i >= 0; i--) {
+          console.log(data[i]);
+          $("#output").prepend('<img src="' + data[i] + '"/>');
+        }
+      })
   	}
   })
 })
