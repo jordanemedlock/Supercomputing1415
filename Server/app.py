@@ -5,6 +5,7 @@ import urllib
 import tornado.escape
 import data
 import json
+import os.path
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -27,7 +28,7 @@ class MathFiles(tornado.web.RequestHandler):
         t = MimeTypes().guess_type(url)
         print t
         self.set_header("Content-Type", '' + t[0] + '; charset="utf-8"')
-        f = open("../IPython/greyMath6/" + fileName)
+        f = open("../IPython/tranMath6/" + fileName)
         s = f.read()
         self.write(s)
 
