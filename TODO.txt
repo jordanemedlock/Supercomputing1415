@@ -1,0 +1,113 @@
+# TODO list for the rest of the semester.
+
+Submit your paper.
+Judges will judge.
+
+if (good): # top 10 finalists
+a:
+  Give a PowerPoint presentation to a room of about 20.
+  Then they will judge.
+  If (best or top3):
+    you.bankBalance += $1000
+  you.scholarship += $5000
+else:
+  Give a presentation in front of 4 judges, with a poster board.
+  They will judge.
+  if (best):
+    goto a
+  else:
+    Still get prizes.
+    Like for Python, Innovation, 4 year, Freshmen, Best posterboard.
+    if (win):
+      money.
+
+
+## PowerPoint
+  Less words on slides, more words out mouths.
+  More pictures, or demonstrations.
+
+## PosterBoard
+
+## Paper
+  - Abstract
+    - Intro 3 Sentences
+      - Background
+      - Why
+    - Methods 2 Sentences
+      - How
+    - Results 1 Sentence
+      - Did you succeed
+  - Problem Statement
+    - What is your problem
+    - Why is it a problem 
+    - Why do YOU care
+  - Background
+    - What have people done
+    - What have people not done
+  - Methods
+    - As much detail as humanly possible
+    - Not just source code
+  - Results
+    - What you got out of it.
+    - You had an idea of what you were going to finish, how did it match up?
+  - Conclusions
+    - Impact
+    - Why your results are what they are
+    - Did you succeed.
+    - How does your solution fix your problem
+  - Appendix
+    - Code
+    - Software used
+      - Tornado
+      - PIL
+      - Levenshtein
+      - NumPy
+      - SciPy
+      - Matplotlib
+      - NLTK
+  - Discussion
+    - Verification
+    - Significant Achievements 
+    - Where you went wrong
+    - 4 Year project
+  - Acknowledgments
+
+
+What order do you need to write these
+Approximately:
+- Problem Statement   5
+- Background          5
+- Methods             4
+- Results             3
+- Conclusions         3
+- Discussion          3
+- Abstract            3
+- Appendix            1
+- Acknowledgments     1
+                      28
+
+Sam:
+-- This week
+- Problem Statement   5
+- Methods             4
+- Results             3
+
+-- Next week
+- Abstract            3
+
+
+Tom:
+-- This week
+- Background          5
+- Conclusions         3
+- Discussion          3
+
+-- Next week
+- Appendix            1
+- Acknowledgments     1
+
+Notes:
+Flow charts!!!! Or an organizational graph!!! Use something like lucid chart.
+
+
+## Video Contest
