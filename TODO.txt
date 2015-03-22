@@ -28,7 +28,7 @@ else:
 ## PosterBoard
 
 ## Paper
-  - Abstract
+  - Abstract APPROXIMATELY
     - Intro 3 Sentences
       - Background
       - Why
@@ -94,8 +94,7 @@ Sam:
 - Results             3
 
 -- Next week
-- Abstract            3
-
+- More Methods
 
 Tom:
 -- This week
@@ -107,6 +106,7 @@ Tom:
 - Appendix            1
 - Acknowledgments     1
 - Bibliography        2
+- Abstract            3
 
 Notes:
 Flow charts!!!! Or an organizational graph!!! Use something like lucid chart.

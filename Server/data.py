@@ -1,7 +1,13 @@
 #Digital Aristotle
 
 ####### Modules 
+"""
+Author:
+Date:
+Copyright:
+Description:
 
+"""
 import json
 from matplotlib.pylab import *
 import numpy as np
@@ -189,6 +195,9 @@ numberOfTimesRan = 0
 filtered_words_global = []
 def bestChapter(input_string, chapters):
     def countWordsInSubChapter(subchapter):
+        """
+        This method takes blah, blah, blah and returns blah it does some stuff
+        """
         global numberOfTimesRan, filtered_words_global
         numberOfTimesRan += 1
         accum = 0
