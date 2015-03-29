@@ -1,6 +1,6 @@
 #Digital Aristotle
 
-####### Modules 
+####### Modules Begin 
 
 import json
 from matplotlib.pylab import *
@@ -15,18 +15,15 @@ from itertools import chain
 import nltk
 import os.path
 
-####### Modules 
+####### Modules End
 
-DEBUG = True
-def debug(*s):
-    global DEBUG
-    if DEBUG:
-        print s
-
-
-###### Data Components 
+###### Data Components Begin
 
 class Serializable(object):
+    '''
+    Creates a class that allow for the creation of a 
+    JSON database while still being able to be used in Python
+    '''
     @classmethod
     def fromJsonFile(cls,fname):
         f = open("Math6")
@@ -44,6 +41,11 @@ class Serializable(object):
         return (json.dumps(self.toJSONObj(), indent=2))
 
 class Book(Serializable):
+    '''
+    Creates a class that will contain major components 
+    (book's name, chapters, isbn, and publish_date) of 
+    the database based on the math book
+    '''
     #                 str  [Chapter] str         str
     def __init__(self,name,chapters,publish_date,isbn):
         self.name = name
@@ -53,57 +55,76 @@ class Book(Serializable):
 
     @classmethod
     def fromJsonObj(cls,dictionary):
+        '''
+        Creates a dictionalry with components of the book
+        '''
         return cls(dictionary['name'],[Chapter.fromJsonObj(obj) for obj in dictionary['chapters']],dictionary['publish_date'],dictionary['isbn'])
 
     def toJSONObj(self):
+        '''
+        Adds information to dictionary based on dictionary 
+        values created in the "fromJSONObj" function
+        '''
         return {'name' : self.name, 'chapters' : [obj.toJSONObj() for obj in self.chapters], 'publish_date': self.publish_date, 'isbn': self.isbn}
     
 class Chapter(Serializable):
-    #                 str  [Sub_Chapter] [Subject] 
-    def __init__(self,name,subchapters,subjects,pages):
+    '''
+    Makes a class which will contain the a chapter's name, 
+    SubChapter object, and the number of pages in the entire chapter
+    '''
+    #                 str  [Sub_Chapter] 
+    def __init__(self,name,subchapters,pages):
         self.name = name
         self.subchapters = subchapters
-        self.subjects = subjects
         self.pages = set(pages)
-
+    
+    '''
+    Next two functions do the same JSON creation as in the "Book"
+    class, except it uses dictionary values for the chapter's name.
+    subchter, and pages
+    '''
     def toJSONObj(self):
-        return {'name' : self.name, 'subchapters' : [x.toJSONObj() for x in self.subchapters], 'subjects': self.subjects, 'pages':list(self.pages)}
+        return {'name' : self.name, 'subchapters' : [x.toJSONObj() for x in self.subchapters], 'pages':list(self.pages)}
     
     @classmethod
     def fromJsonObj(cls,dictionary):
-        return cls(dictionary['name'],[SubChapter.fromJsonObj(obj) for obj in dictionary['subchapters']],dictionary['subjects'],dictionary['pages'])
+        return cls(dictionary['name'],[SubChapter.fromJsonObj(obj) for obj in dictionary['subchapters']],dictionary['pages'])
 
 class SubChapter(Serializable):
-    #                  str [Paragraph] [Subject]
-    def __init__(self,name,text,subjects, pages):
+    '''
+    Makes a class which will contain a subchapter's name, the 
+    text in the subchapter, and the amount of pages in the SubChapter
+    '''
+    #                  str [Paragraph] 
+    def __init__(self,name,text,pages):
         self.name = name
         self.text = text
-        self.subjects = subjects
         self.pages = set(pages)
 
+    '''
+    The next two fucntions do the same JSON database creation as in the 
+    "Book" class, except it uses dictionary values  for the SubChapter's 
+    name, text in the SubChapter, and the number of pages in the subchpter
+    '''
     @classmethod
     def fromJsonObj(cls,dictionary):
         return cls(dictionary['name'],
                    dictionary['text'],
-                   dictionary['subjects'],
                    dictionary['pages'])
 
     def toJSONObj(self):
-        return {'name' : self.name, 'text' : self.text, 'subjects': self.subjects, 'pages': list(self.pages)}
-   
-class Subject(object):
-    def __init__(self,text):
-        self.text = text
+        return {'name' : self.name, 'text' : self.text, 'pages': list(self.pages)}
 
-    @classmethod
-    def fromJsonObj(cls,dictionary):
-        return cls(dictionary['text'])
+###### Data Components End
 
-###### Data Components 
-
-####### Data Creation  
+####### Data Creation Begin 
 
 def createNewMathOut():
+    '''
+    Function to use classes in "Data components" to create the JSON database
+    by searching through each page of the book, and using the font to determine
+    where the type of object, chapter, subchapters, or text, the information belongs 
+    '''
     f = open("LinedMath.json")
     book = Book('A First Book in Algebra',[],"","")
     document = json.loads(f.read().encode('utf8'))
@@ -111,7 +132,7 @@ def createNewMathOut():
     subchapter = None
     for (page_num, page) in enumerate(document):
         page_num += 1
-        for line in page:
+        for line in page: # Searches by each line of text on a single page
             if line[u'font'] == 5: # chapter
                 chapter = Chapter(line[u'data'], [], [line[u'data']], [page_num])
                 book.chapters.append(chapter)
@@ -122,7 +143,6 @@ def createNewMathOut():
                 if chapter is None:
                     chapter = Chapter('No Name Chapter', [], [], [page_num])
                 chapter.subchapters.append(subchapter)
-                chapter.subjects.append(line[u'data'])
             
             elif subchapter is not None:
                 subchapter.text += u'\n' + line[u'data']
@@ -135,22 +155,31 @@ def createNewMathOut():
                     chapter = Chapter('No Name Chapter', [], [], [page_num])
                 chapter.subchapters.append(subchapter)
 
-    fout = open("newMathOut.json",'w')
+    fout = open("newMathOut.json",'w')  
     string = json.dumps(book.toJSONObj())
-    fout.write(string)
+    fout.write(string) # Creates the database as a text file
 
 def readBook():
+    '''
+    Function used to search through the JSON in python
+    database created in the fucntions
+    '''
     f = open('newMathOut.json')
     book = Book.fromJsonObj(json.loads(f.read()))
     return book
-    for chapter in book.chapters:
-        debug(type(chapter.subchapters))
 
-####### Data Creation  
+####### Data Creation End  
 
-####### Search Data (Functions)
+####### Search Data Begin (Functions)
 
 def levenshtein(source, target):
+    '''
+    Function used to compare two strings for their similarity by comparing
+    the individual characters in the strings, and finding what is needed to 
+    make them the same (i.e. insertion, substitution, or deletion). Returns 
+    a number based on the changes required; the smaller the number, the closer 
+    the two strings are to eachother. 
+    '''
     if len(source) < len(target):
         return levenshtein(target, source)
  
@@ -177,6 +206,11 @@ def levenshtein(source, target):
 levenshtein = np.vectorize(levenshtein)
 
 def minimumChapter(xs):
+    '''
+    Function used to find the chapter with the least amount of difference
+    between the input and a (sub)chpter's text and name given an index where
+    the smallest index is the (sub)chapter with the least difference
+    '''
     smallest = float("inf")
     smallestChapter = None
     for (value, chapter) in xs:
@@ -188,7 +222,19 @@ def minimumChapter(xs):
 numberOfTimesRan = 0
 filtered_words_global = []
 def bestChapter(input_string, chapters):
+    '''
+    Function used to return the chapter or subchapter withe the smallest 
+    difference between the input. It compares all of the chapters and
+    subchapters to the input
+    '''
     def countWordsInSubChapter(subchapter):
+        '''
+        Function that changes a subchapters text into a lost of individual
+        words, and then removest irrelevant words, stop words, from this list.
+        It then creates a negative accumulator where one is subtracted from it 
+        if the word matches the input. The sum of levenshtein distance of a word 
+        divided by every word is then added to this accumulator. 
+        '''
         global numberOfTimesRan, filtered_words_global
         numberOfTimesRan += 1
         accum = 0
@@ -205,23 +251,31 @@ def bestChapter(input_string, chapters):
     countWordsInSubChapter = memoize(countWordsInSubChapter)
     
     def chapterPlusIndex(chapter):
+        '''
+        Function used to return the (sub)chapter with the name and text closest to the 
+        input by comparing their levenshtein distances with a created index which is more
+        accurate than the other chapters or SubChapters
+        '''
         index = levenshteinDistance(input_string, chapter.name)
         if type(chapter) is SubChapter:
             index += countWordsInSubChapter(chapter)
-            debug('\t', chapter.name, index)
         elif type(chapter) is Chapter:
             accum = 0
             for subchapter in chapter.subchapters:
                 accum += countWordsInSubChapter(subchapter)
             accum = accum/len(chapter.subchapters)
             index += accum
-            debug(chapter.name, index)
             
         return (float(index), chapter)
     xs = map(chapterPlusIndex, chapters)
     return minimumChapter(xs)
 
 def memoize(f):
+    '''
+    Function used to make searching the database quicker in the "bestChapter" function by repeating
+    a code that has been ran before in the same way so it takes less time to run it again for another
+    chapter
+    '''
     memory = dict()
     def memoizedFunction(x):
         if x in memory:
@@ -232,21 +286,34 @@ def memoize(f):
     return memoizedFunction
 
 def getChapter(input_string,book):
+    '''
+    Function used to find the chapter or subchapter that is closet to the input by comparing the input 
+    to every chapter and SubChapter with the "bestChapter" function
+    '''
     return bestChapter(input_string, list(chain(*[c.subchapters for c in book.chapters])) + book.chapters)
 
 def levenshteinDistance(str1,str2):
+    '''
+    A function which takes two string and converts them into unicode, and then compares them with the "levenshtein"
+    function after making them lowercase and removing periods from the strings
+    '''
     str1, str2 = unicode(str1), unicode(str2)
     return levenshtein(str1.lower().rstrip('.'),str2.lower().rstrip('.'))
 
 def isInt(string):
+    '''
+    A function used to test if a string contains numbers and returns a list of those strings.
+    This is used to remove numbers from the comparison of the input to the text in SubChapters 
+    '''
     string = [x for x in string if x in '0123456789']
     return len(string) > 0
 
-####### Search Data (Functions)
+####### Search Data End (Functions)
 
-####### Search Data
+####### Search Data Begin
 
-stopwords = """
+# These stop words are words that are not related to data seach, but used in spoken and written English
+stopwords = """ 
 a about above after again agains all am an and any are aren't as at be because been before being below between both but by can't cannot 
 could couldn't did didn't do does doesn't doing don't down during each few for from further had hadn't has hasn't have haven't having he 
 he'd he'll he's her here here's hers herself him himself his how how's i i'd i'll i'm i've if in into is isn't it it's its itself let's me
@@ -260,19 +327,29 @@ exercise man must
 stopWords = stopwords.split()
 
 def search(input_string,book):
+    '''
+    Main function which uses the functions above to compare an input to the 
+    book's chapters and subchapter, and returns the chapter with the closest 
+    related information
+    '''
     filtered_words_global = []
     chapter = getChapter(input_string,book)
-    debug("\n",chapter.name)
-    debug("Page:",chapter.pages,"\n")
     return displayPages(chapter.pages)
 
 def displayPages(pages):
+    '''
+    Function used to return the chapter's pages file names which are
+    used to find the file locations of the book's pictures
+    '''
     pages = sorted(list(pages))
     return [os.path.join('Math6-%03d.png'%(x)) for x in pages]
 
-####### Search Data
-
+####### Search Data End
+'''
+Statement used by server to run the search using an input sent 
+from the webpage
+'''
 if __name__ == '__main__':
     createNewMathOut()
     book = readBook()
-    search(u'substracting',book)
+    search(u'',book)
