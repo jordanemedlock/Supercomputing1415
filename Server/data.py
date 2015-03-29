@@ -134,14 +134,14 @@ def createNewMathOut():
         page_num += 1
         for line in page: # Searches by each line of text on a single page
             if line[u'font'] == 5: # chapter
-                chapter = Chapter(line[u'data'], [], [line[u'data']], [page_num])
+                chapter = Chapter(line[u'data'], [], [page_num])
                 book.chapters.append(chapter)
                 subchapter = None
 
             elif line[u'font'] == 3: # Subchapter
-                subchapter = SubChapter(line[u'data'], '', [line[u'data']], [page_num])
+                subchapter = SubChapter(line[u'data'], '', [page_num])
                 if chapter is None:
-                    chapter = Chapter('No Name Chapter', [], [], [page_num])
+                    chapter = Chapter('No Name Chapter', [], [page_num])
                 chapter.subchapters.append(subchapter)
             
             elif subchapter is not None:
@@ -150,9 +150,9 @@ def createNewMathOut():
                 chapter.pages.add(page_num)
             
             else:
-                subchapter = SubChapter("No Name", line[u'data'], [], [page_num])
+                subchapter = SubChapter("No Name", line[u'data'], [page_num])
                 if chapter is None:
-                    chapter = Chapter('No Name Chapter', [], [], [page_num])
+                    chapter = Chapter('No Name Chapter', [], [page_num])
                 chapter.subchapters.append(subchapter)
 
     fout = open("newMathOut.json",'w')  
