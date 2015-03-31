@@ -1,3 +1,7 @@
+// Authors: Samuel J. Gervais and Thomas R. Curtin
+// School: Saint Pius X High School
+// Email: samgervais512@gmail.com
+// Discription: Program for the main functions of the search bar which sends search to server, and displays the results.
 $(document).ready(function() {
     $("#displayImg").hide().show(1000);
     $("#search").delay(1000).hide().slideDown(1000);
@@ -5,27 +9,27 @@ $(document).ready(function() {
   	var search=$("#search").val();
   	search = $.trim(search);
   	if(search == "doge") {
+      $("#output").empty()
   		$("#output").prepend('<img src="doge.png" />').hide(100).show(1000);
   	}
-  	else if(search == "back in the day" || search == "lel" || search == "LOL") {
+  	else if(search == "acknowledge") {
   		var random = Math.floor(Math.random()*10);
-  		var twitter = [
-  		"https://twitter.com/jordanemedlock/status/126382915285291009",
-  		"https://twitter.com/jordanemedlock/status/230350738839187458",
-  		"https://twitter.com/jordanemedlock/status/137402194256338946",
-  		"https://twitter.com/jordanemedlock/status/88816149214658560",
-  		"https://twitter.com/jordanemedlock/status/112760542271242240",
-  		"https://twitter.com/jordanemedlock/status/115611206563270656",
-  		"https://twitter.com/jordanemedlock/status/110931996750004226",
-		  "https://twitter.com/jordanemedlock/status/114081908358512640",
-		  "https://twitter.com/jordanemedlock/status/92490374521683968",
-  		"http://jordanemedlock.com"
+      console.log(random)
+  		var acknowl = [
+  		"http://jordanemedlock.com",
+      "http://www.cgpgrey.com"
   		];
-  		window.open([twitter[random]]);
+      if(random % 2 == 0) {
+        window.open([acknowl[0]]);
+      }
+      else {
+        window.open([acknowl[1]]);
+      }
   	}
   	else {
   		$.getJSON("/search/" + encodeURIComponent(search), function(data) {
         console.log(data);
+        $(output).empty()
         for (var i = data.length - 1; i >= 0; i--) {
           console.log(data[i]);
           $("#output").prepend('<img src="' + data[i] + '"/>');

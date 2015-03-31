@@ -1,3 +1,9 @@
+'''
+Authors: Samuel J. Gervais and Thomas R. Curtin 
+School: Saint Pius X High School
+Email: samgervais512@gmail.com
+Description: Uses Tornado software to create a server for the webpage to run on.  
+'''
 import tornado.ioloop
 import tornado.web
 from mimetypes import MimeTypes

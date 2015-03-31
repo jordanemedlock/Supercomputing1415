@@ -1,11 +1,8 @@
-#Digital Aristotle
-
-####### Modules 
 """
-Author:
-Date:
-Copyright:
-Description:
+Authors: Samuel J. Gervais and Thomas R. Curtin
+School: Saint Pius X High School
+Email: samgervais512@gmail.com
+Description: Main database creation, search, and document-locating program
 """
 ####### Modules Begin 
 
