@@ -29,7 +29,7 @@ $(document).ready(function() {
   	else {
   		$.getJSON("/search/" + encodeURIComponent(search), function(data) {
         console.log(data);
-        $(output).empty()
+        $("#output").empty();
         for (var i = data.length - 1; i >= 0; i--) {
           console.log(data[i]);
           $("#output").prepend('<img src="' + data[i] + '"/>');
